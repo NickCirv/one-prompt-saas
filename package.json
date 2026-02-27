@@ -1,0 +1,30 @@
+{
+  "name": "one-prompt-saas",
+  "version": "1.0.0",
+  "description": "One prompt. One command. Full deployed SaaS.",
+  "type": "module",
+  "bin": {
+    "one-prompt-saas": "./bin/ops.js"
+  },
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.4.0",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0"
+  },
+  "keywords": [
+    "claude-code",
+    "saas",
+    "prompt-engineering",
+    "scaffolding",
+    "one-prompt"
+  ],
+  "author": "NickCirv",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
