@@ -1,43 +1,24 @@
-![Banner](banner.svg)
+![one-prompt-saas — scaffold a complete deployable SaaS from a single Claude Code prompt](assets/banner.png)
 
-# one-prompt-saas
+<div align="center">
 
-> One prompt. One command. Full deployed SaaS.
+**One prompt. One command. A complete, deployable SaaS — auth, routes, schema, and deploy config included.**
 
-[![npm version](https://img.shields.io/npm/v/one-prompt-saas?color=FBBF24&label=npm)](https://www.npmjs.com/package/one-prompt-saas)
-[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/NickCirv/one-prompt-saas?style=flat)](https://github.com/NickCirv/one-prompt-saas/stargazers)
+![license](https://img.shields.io/badge/license-MIT-blue?labelColor=0B0A09)
+![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen?labelColor=0B0A09)
+![templates](https://img.shields.io/badge/templates-5-8B92F6?labelColor=0B0A09)
 
-## The Problem
+</div>
 
-Building a SaaS takes weeks of scaffolding, auth, database setup, deployment config, and glue code you've written four times before. What if Claude could read one spec and ship the whole thing — routes, schema, frontend, deployment, and all?
+---
 
-This repo contains 5 carefully engineered prompts. Each one, when given to Claude Code, produces a complete, deployable application. No back-and-forth. No gaps. No "you'll need to add auth yourself."
-
-## Quick Start
-
-```bash
-npx one-prompt-saas
-```
-
-Pick a template. A directory is created with a `CLAUDE.md`. Open Claude Code in it. Come back to a working app.
-
-Or go fully hands-off:
-
-```bash
-# Skip prompts, auto-launch Claude Code
-npx one-prompt-saas --template todo-saas --name my-todos --auto
-```
-
-## Example Output
+Building a SaaS takes weeks of scaffolding: auth, database setup, deployment config, and glue code you've written four times before. `one-prompt-saas` packages five carefully engineered specs — each ~150 lines — that Claude Code can read once and turn into a complete, running application. No back-and-forth. No gaps. No "you'll need to add auth yourself."
 
 ```
-$ npx one-prompt-saas
+$ npx github:NickCirv/one-prompt-saas
 
-  ┌─────────────────────────────────────────────┐
-  │        ONE PROMPT SAAS                      │
-  │        One prompt. One command. Shipped.    │
-  └─────────────────────────────────────────────┘
+  ⚡ one-prompt-saas
+  One prompt. One command. Full deployed SaaS.
 
   Pick a template:
   ❯ Todo SaaS           — Auth, tasks, categories, due dates
@@ -61,65 +42,83 @@ $ npx one-prompt-saas
   Or run with --auto to launch Claude Code now.
 ```
 
-After Claude builds it:
+## Install
 
-```
-$ cd my-invoicr && npm start
+No npm account needed — runs straight from GitHub:
 
-  Server running on http://localhost:3000
-  Database: SQLite at ./data/app.db
-  Routes: 14 registered
-  Auth: JWT (access 15m / refresh 7d)
+```bash
+npx github:NickCirv/one-prompt-saas
 ```
 
-## Features
+## Usage
 
-- 5 production-ready templates: Todo SaaS, URL Shortener, Pastebin, Status Page, Invoice Generator
-- Every template specifies complete database schema, all API routes, frontend pages, deployment config
-- Auto mode launches Claude Code immediately — come back to a built app
-- Generated apps include `render.yaml` for one-click Render deployment and `Dockerfile` for containerized hosting
-- Prompts are ~120–150 lines each — enough detail that Claude builds without guessing
+```bash
+# Interactive: pick template + project name via prompts
+npx github:NickCirv/one-prompt-saas
+
+# Non-interactive: specify everything, skip prompts
+npx github:NickCirv/one-prompt-saas --template todo-saas --name my-todos
+
+# Fully hands-off: scaffold + launch Claude Code immediately
+npx github:NickCirv/one-prompt-saas --template invoice-generator --name my-invoicr --auto
+```
+
+| Flag | Description |
+|------|-------------|
+| `--template <name>` | Skip template selection. One of: `todo-saas`, `url-shortener`, `pastebin`, `status-page`, `invoice-generator` |
+| `--name <name>` | Skip project name prompt. Lowercase, hyphens, numbers only |
+| `--auto` | Launch Claude Code immediately after scaffolding (`claude --dangerously-skip-permissions`) |
 
 ## Templates
 
-| Template | What It Builds | Stack |
+| Template | What it builds | Stack |
 |----------|---------------|-------|
-| Todo SaaS | Full todo app with auth, categories, due dates | Express + SQLite + JWT |
-| URL Shortener | Link shortener with click analytics dashboard | Express + SQLite (LRU cache) |
-| Pastebin | Code sharing with syntax highlighting + expiry | Express + SQLite + Highlight.js |
-| Status Page | Service monitoring with incident history + alerts | Express + SQLite + Nodemailer |
-| Invoice Generator | PDF invoices with Stripe-ready checkout | Express + SQLite + PDFKit + Stripe |
+| `todo-saas` | Full todo app — auth, categories, due dates | Express + SQLite + JWT |
+| `url-shortener` | Link shortener with click analytics dashboard | Express + SQLite (LRU cache) |
+| `pastebin` | Code sharing with syntax highlighting + expiry | Express + SQLite + Highlight.js |
+| `status-page` | Service monitoring, incident history + email alerts | Express + SQLite + Nodemailer |
+| `invoice-generator` | PDF invoices with Stripe-ready checkout | Express + SQLite + PDFKit + Stripe |
 
-## How It Works
+## What each spec includes
 
-1. Run `npx one-prompt-saas` and pick a template
-2. A new directory is created with a complete `CLAUDE.md` spec
-3. Open Claude Code in that directory (or use `--auto` to launch it immediately)
-4. Claude reads the spec and builds the entire application — schema, routes, frontend, deployment config
-5. Run `npm install && npm start` — it works
+Every `CLAUDE.md` prompt specifies:
+
+- Complete database schema (SQL DDL — no ambiguity)
+- Every API route with exact request/response shape
+- Validation rules and error formats
+- Frontend pages, interactions, and design tokens
+- Deployment config (`render.yaml` + `Dockerfile`)
+- A final checklist Claude verifies before calling it done
 
 The magic is not AI. It is prompt engineering. A well-written spec gets a well-built app.
 
-## What Each Prompt Specifies
+## How it works
 
-- Complete database schema (SQL DDL)
-- Every API route with request/response shape
-- Validation rules and exact error formats
-- Frontend pages, interactions, and design tokens
-- Deployment config (`render.yaml` + `Dockerfile`)
-- A final checklist Claude verifies before finishing
+1. Run `npx github:NickCirv/one-prompt-saas` and pick a template
+2. A directory is created with a complete `CLAUDE.md` spec inside
+3. Open Claude Code in that directory (or use `--auto` to launch it immediately)
+4. Claude reads the spec and builds the full application — schema, routes, frontend, deploy config
+5. `npm install && npm start` — it works
 
 ## Requirements
 
 - Node.js 18+
-- Claude Code (`npm i -g @anthropic-ai/claude-code`) — only required for `--auto` mode
+- [Claude Code](https://github.com/anthropics/claude-code) — only required for `--auto` mode
 
-## See Also
+## What it is NOT
 
-- [zero-to-prod](https://github.com/NickCirv/zero-to-prod) — Speedrun: empty directory to deployed app
+- **Not a code generator in the traditional sense.** It produces a structured spec that Claude Code interprets — the LLM writes the actual code, not this tool.
+- **Not a magic "works every time" button.** Output quality depends on Claude's capability and context window. The specs are engineered for reliability, not guaranteed correctness.
+- **Not a deployment tool.** The scaffolded `render.yaml` and `Dockerfile` are ready to use, but you still connect your own accounts and environment variables.
+
+## See also
+
+- [zero-to-prod](https://github.com/NickCirv/zero-to-prod) — Empty directory to deployed app
 - [clone-any-app](https://github.com/NickCirv/clone-any-app) — Describe an app, Claude clones it
 - [sleep-and-ship](https://github.com/NickCirv/sleep-and-ship) — Queue builds overnight, wake up to shipped code
 
-## License
+---
 
-MIT — [NickCirv](https://github.com/NickCirv)
+<div align="center">
+<sub>Node 18+ · MIT · by <a href="https://github.com/NickCirv">NickCirv</a></sub>
+</div>
